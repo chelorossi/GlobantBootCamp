@@ -1,0 +1,60 @@
+  <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <title>Globant :: Welcome to the HTML5 bootcamp</title>
+        <script src="js/jquery-2.0.0.min.js"></script>
+      </head>
+    <body>
+      <input id="boton1" type="button" value="clickeame"></input>
+      <script type="text/javascript">
+          function o_suceso(result) {
+            $("#res").val(result);
+          }
+
+        $(document).ready(function() {
+            alert("Hello World!");
+            $("#alias").focus();
+            $("#boton1").click(function() {
+                            
+              $.ajax({
+                url: "http://bootcamp.aws.af.cm/welcome/Marcelo%20Rossi",
+                success: function(response) {                  
+                  $("#res").html(response.response);
+                  $("#res").css("background-color", "green");
+                } ,
+                //falta manejar errores
+                error: function() {
+                  $("#res").css("background-color", "red");
+                }
+              });           
+            });
+
+            $("#boton2").click(function() {
+              alert("alertando para ud");
+              $.ajax({
+                url: "http://search.twitter.com/search.json",
+                data: "q=html5",
+                crossDomain: true ,
+                success: function(response) {                  
+                  //$("#res").html(response.response);
+                  //$("#res").css("background-color", "green");
+                } ,
+                
+                error: function() {
+                  $("#res").css("background-color", "red");
+                }
+              });           
+            });
+
+
+        });      
+      </script>
+      <input id="alias" type="text"/>
+      <div id="res"></div>
+      <input id="boton2" type="button" value="GetTweets"></input>
+      <div id="res2" style="width:800px; margin:0 auto;"></div>
+
+    </body>
+    </html>
+

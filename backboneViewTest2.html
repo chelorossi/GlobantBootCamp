@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>Backbone Test</title>
+       <link rel="stylesheet" href="css/bootstrap.min.css">
+       <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+
+       <script src="js/jquery-2.0.0.min.js"></script>
+       <script src="js/handlebars.js"></script>
+       <script src="js/underscore.js"></script>
+       <script src="js/backbone.js"></script>      
+
+       <!-- Setup our templates -->
+       <script id="personTemplate" type="text/x-handlebars-template">
+           <ul>
+           {{#each personas }}
+           <li>{{this.nombre}} - {{this.edad}}</li>
+           {{/each}}
+           </ul>
+       </script>
+       
+       <!-- End templates setup -->        
+   </head>
+   <body>
+       <div class="container-narrow">
+           <form>
+             <fieldset>
+               <label>Nombre</label>
+               <input type="text" id="nombre">
+               <label class="text">Edad</label>
+               <input type="text" id="edad">
+               <button type="submit" class="btn">Agregar</button>
+             </fieldset>
+           </form>
+           <div id='personas-container'></div>
+       </div>
+       <script>
+
+           //Objeto de la aplicacion
+           var app = {};
+
+           //Modelo persona
+           app.Persona = Backbone.Model.extend({
+               defaults: {
+                   nombre: "",
+                   edad: 0
+               }
+           });
+               
+           //Coleccion de personas
+           var Personas = Backbone.Collection.extend({
+               model: app.Persona,
+           });
+
+           //Creo la instancia de la coleccion
+           app.Personas = new  Personas();
+
+           //Vista de persona  
+           app.PersonaView = Backbone.View.extend({
+
+               el: $("#personas-container"),
+
+               render: function(){
+                   var js = app.Personas.toJSON();
+                   var source = $('#personTemplate').html();
+                   var template = Handlebars.compile(source);
+                   var html = template({personas: js});
+                   
+                   $(this.el).append(html);                    
+                   return this;
+               }
+           });
+
+           // Vista de personas
+           app.PersonasView = Backbone.View.extend({
+               
+               el: $(".container-narrow"),
+
+               events: {
+                   'click .btn' : 'crear'
+               },
+
+               initialize: function(){
+                   this.listenTo(app.Personas, 'add', this.refrescar);
+               },
+
+               crear: function(e){
+                   event.preventDefault();
+                   app.Personas.add([new app.Persona({nombre: $('#nombre').val(), edad: $('#edad').val()})]);
+                   $('#nombre').val('');
+                   $('#edad').val('');
+               },
+
+               refrescar: function() {
+                   $('#personas-container').html('');
+                   var personaView = new app.PersonaView();
+                   personaView.render();
+               }
+           });
+           
+           //Creo la vista principal
+           var personasView = new app.PersonasView();
+       </script>
+   </body>
+</html>

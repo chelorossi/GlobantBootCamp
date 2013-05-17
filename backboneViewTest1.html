@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>Backbone Test</title>
+       <link rel="stylesheet" href="css/bootstrap.min.css">
+       <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+
+       <script src="js/jquery-2.0.0.min.js"></script>
+       <script src="js/handlebars.js"></script>
+       <script src="js/underscore.js"></script>
+       <script src="js/backbone.js"></script>      
+
+       <!-- Setup our templates -->
+       <script id="personTemplate" type="text/x-handlebars-template">
+           <h2>{{name}} {{surname}} ({{age}})</h2>
+       </script>
+       
+       <!-- End templates setup -->
+       
+       
+       <script>
+       // Stub out the person model
+       var Person = Backbone.Model.extend({
+           
+       });
+           
+           
+       // Define the view for a single person
+       var PersonView = Backbone.View.extend({
+
+           render: function() {
+                   // This is method that can be called
+               // once an object is init. You could
+               // also do this in the initialize event
+               var source = $('#personTemplate').html();
+               var template = Handlebars.compile(source);
+               var html = template(this.model.toJSON());
+               
+               $(this.el).html(html);
+
+               return this;
+           }
+       });
+       
+       $(document).ready(function(){
+           // Create new instances of the person models
+           var person = new Person({name: "Tim El viejo loco", surname: "Tocococo", age: 55});
+            
+           // Create instances of the views
+           var personView = new PersonView({
+               model: person
+           });
+
+           personView.el = $('#personContainer'),
+
+           personView.render();
+       });
+
+       </script>
+       
+   </head>
+   <body>
+       <div id='personContainer'></div>
+   </body>
+</html>
