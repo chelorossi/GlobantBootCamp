@@ -20,7 +20,7 @@
               $.ajax({
                 url: "http://bootcamp.aws.af.cm/welcome/Marcelo%20Rossi",
                 success: function(response) {                  
-                  $("#res").html(response.response);
+                  $("#res").append(response.response);
                   $("#res").css("background-color", "green");
                 } ,
                 //falta manejar errores
@@ -35,14 +35,27 @@
               $.ajax({
                 url: "http://search.twitter.com/search.json",
                 data: "q=html5",
-                crossDomain: true ,
-                success: function(response) {                  
-                  //$("#res").html(response.response);
+                dataType: 'jsonp',
+                success: function(response) {  
+                  alert("SISIS"); 
+                  console.log(response);
+                  for (var i = response.results.length - 1; i >= 0; i--) {
+                      $("#res2").append("User: ");
+                      $("#res2").append(response.results[i].from_user);
+                      $("#res2").append("Text: ");
+                      $("#res2").append(response.results[i].text);
+                      $("#res2").append("Created_At: ");
+                      $("#res2").append(response.results[i].created_at);
+                      $("#res2").append("<p>Profile_image_url: ");
+                      $("#res2").append(response.results[i].profile_image_url);                                       
+                  };               
+                  //$("#ressponse.response);
                   //$("#res").css("background-color", "green");
                 } ,
                 
                 error: function() {
-                  $("#res").css("background-color", "red");
+                  alert("An error was generated");
+                  $("#res2").css("background-color", "red");
                 }
               });           
             });
@@ -53,7 +66,7 @@
       <input id="alias" type="text"/>
       <div id="res"></div>
       <input id="boton2" type="button" value="GetTweets"></input>
-      <div id="res2" style="width:800px; margin:0 auto;"></div>
+      <div id="res2"></div>
 
     </body>
     </html>
