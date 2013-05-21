@@ -2,36 +2,15 @@
     <html>
       <head>
         <meta charset="utf-8" />
-        <title>Globant :: Welcome to the HTML5 bootcamp - Topic 2</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1"> 
-        <!-- <script src="../js/jquery-2.0.0.min.js"></script> -->
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
-        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-        <script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>        
+        <title>Globant :: Welcome to the HTML5 bootcamp</title>
+        <script src="../js/jquery-2.0.0.min.js"></script>
       </head>
-    <body style="background-color:rgba(255,100,0,0.5);">
-
-<div data-role="page">
-
-  <div data-role="header">
-    <h1>Welcome to the HTML5 bootcamp - Topic 2</h1>
-  </div><!-- /header -->
-
-  <div data-role="content"> 
-      <input id="boton1" type="button" value="clickeame"></input>
+    <body style="background-color:rgba(255,100,0,0.5);margin:0px;">
+      <input id="boton1" style="z-index:20;position:relative" type="button" value="clickeame"></input>
       <script type="text/javascript">
-          function o_suceso(result) {
-            $("#res").val(result);
+          function highlight(nombre) {            
+            $("#res").html($("#res").html().replace(nombre, "<span style="+"'color:green'"+">"+nombre+"</span>"));            
           }
-
-          $('#boton1').click(function() {
-          $('#res').animate({
-            opacity: 0.25,            
-            height: 'toggle'
-          }, 5000, function() {
-            // Animation complete.
-          });
-        });
 
         $(document).ready(function() {
             alert("Hello World!");
@@ -39,10 +18,10 @@
             $("#boton1").click(function() {
                             
               $.ajax({
-                url: "http://bootcamp.aws.af.cm/welcome/Marcelo%20Rossi",
+                url: "http://bootcamp.aws.af.cm/welcome/Marcelo",
                 success: function(response) {                  
                   $("#res").append(response.response);
-                  $("#res").css("background-color", "green");
+                  highlight("Marcelo");
                 } ,
                 //falta manejar errores
                 error: function() {
@@ -59,14 +38,14 @@
                 success: function(response) {                    
                   console.log(response);
                   for (var i = response.results.length - 1; i >= 0; i--) {                    
-                      $("#res2").append('<span style="display: block; background-color:rgba(100,100,0,0.5);">‏‏&rlm;</span>');                   
+                      $("#res2").append('<span style="display: block; z-index:23; position:relative; background-color:rgba(244,244,244,1);">‏‏&rlm;</span>');                   
                       $("#res2").append('<p>User: '+response.results[i].from_user+'</p>');
                       $("#res2").append("<p>Text: "+response.results[i].text+"</p>");
                       $("#res2").append("<p>Created_At: "+response.results[i].created_at+"</p>");                      
                       $("#res2").append("<p>Profile_image_url: "+response.results[i].profile_image_url+"</p></div>");                                       
                       
-                  }; 
-                  
+                  };   
+                  $("#over_lay").css('height', $(document).height());              
                   //$("#ressponse.response);
                   //$("#res").css("background-color", "green");
                 } ,
@@ -83,15 +62,10 @@
       </script>
       <input id="alias" type="text"/>
       <div id="res"></div>
-      <input id="boton2" type="button" value="GetTweets"></input>
+      <input id="boton2" style="z-index:20;position:relative" type="button" value="GetTweets"></input>
       
-      <div id="res2" style="background-color:rgba(100,100,0,0.5); width:auto; margin:0 auto;"></div> 
-      <a href="#" data-role="button" data-icon="star">New button, animation Click</a>
-  </div><!-- /content -->
-
-</div><!-- /page -->
-
-
+      <div id="res2" style="background-color:rgba(100,100,0,1); z-index:22; position:relative; width:80%; margin:0 auto;"></div>
+      <div id="over_lay" style="background-color: gray; width: 100%; position: absolute; top: 0pt; z-index: 1; opacity: 0.5; height: 830px;"> HOLA</div>
     </body>
     </html>
 
