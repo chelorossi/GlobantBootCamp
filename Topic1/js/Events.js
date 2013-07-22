@@ -9,6 +9,8 @@
                 success: function(response) {    
                   var resHighlight =  response.response.replace("Marcelo", "<span style="+"'color:green'"+">"+"Marcelo"+"</span>");                                
                   $('#res').append(resHighlight);                              
+                  document.getElementById('alias2').value = '123';
+                  //document.getElementById('alias2').css = '123';
                 } ,
                 //falta manejar errores
                 error: function() {

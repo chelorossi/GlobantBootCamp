@@ -3,69 +3,24 @@
       <head>
         <meta charset="utf-8" />
         <title>Globant :: Welcome to the HTML5 bootcamp</title>
-        <script src="../js/jquery-2.0.0.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/Topic1.css">
+        
       </head>
-    <body style="background-color:rgba(255,100,0,0.5);margin:0px;">
-      <input id="boton1" style="z-index:20;position:relative" type="button" value="clickeame"></input>
-      <script type="text/javascript">
-          function highlight(nombre) {            
-            $("#res").html($("#res").html().replace(nombre, "<span style="+"'color:green'"+">"+nombre+"</span>"));            
-          }
-
-        $(document).ready(function() {
-            alert("Hello World!");
-            $("#alias").focus();
-            $("#boton1").click(function() {
-                            
-              $.ajax({
-                url: "http://bootcamp.aws.af.cm/welcome/Marcelo",
-                success: function(response) {                  
-                  $("#res").append(response.response);
-                  highlight("Marcelo");
-                } ,
-                //falta manejar errores
-                error: function() {
-                  $("#res").css("background-color", "red");
-                }
-              });           
-            });
-
-            $("#boton2").click(function() {
-              $.ajax({
-                url: "http://search.twitter.com/search.json",
-                data: "q=html5",
-                dataType: 'jsonp',
-                success: function(response) {                    
-                  console.log(response);
-                  for (var i = response.results.length - 1; i >= 0; i--) {                    
-                      $("#res2").append('<span style="display: block; z-index:23; position:relative; background-color:rgba(244,244,244,1);">‏‏&rlm;</span>');                   
-                      $("#res2").append('<p>User: '+response.results[i].from_user+'</p>');
-                      $("#res2").append("<p>Text: "+response.results[i].text+"</p>");
-                      $("#res2").append("<p>Created_At: "+response.results[i].created_at+"</p>");                      
-                      $("#res2").append("<p>Profile_image_url: "+response.results[i].profile_image_url+"</p></div>");                                       
-                      
-                  };   
-                  $("#over_lay").css('height', $(document).height());              
-                  //$("#ressponse.response);
-                  //$("#res").css("background-color", "green");
-                } ,
-                
-                error: function() {
-                  alert("An error was generated");
-                  $("#res2").css("background-color", "red");
-                }
-              });           
-            });
-
-
-        });      
-      </script>
-      <input id="alias" type="text"/>
-      <div id="res"></div>
-      <input id="boton2" style="z-index:20;position:relative" type="button" value="GetTweets"></input>
+    <body>
+      <input id="boton1" class="buttons" type="button" value="clickeame">
       
-      <div id="res2" style="background-color:rgba(100,100,0,1); z-index:22; position:relative; width:80%; margin:0 auto;"></div>
-      <div id="over_lay" style="background-color: gray; width: 100%; position: absolute; top: 0pt; z-index: 1; opacity: 0.5; height: 830px;"> HOLA</div>
+      <input id="alias" type="text"/>
+      <input id="alias2" type="text"/>
+      <div id="res"></div>
+      <input id="boton2" class="buttons" type="button" value="GetTweets">
+      
+      <div id="res2" class="tweetsHolder"></div>
+      <div id="over_lay" class="overlay"> </div>
+      <!-- adding scripts at the end -->
+      <script type="text/javascript" src="../js/jquery-2.0.0.min.js"></script>
+      <script type="text/javascript" src="js/Events.js"></script>
+
+
     </body>
     </html>
 

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>  
+  <title>Topic 3</title>
+
+  
+
+</head>
+<body>
+
+
+<div id="observersContainer"></div>
+  <script type="text/javascript" src="js/3rdparty/jquery-2.0.0.min.js"></script>
+  <script type="text/javascript" src="js/3rdparty/underscore.js"></script>
+  <script type="text/javascript" src="js/pubsub.js" ></script>
+  <script type="text/javascript" src="js/topic3.js"></script>
+  <script type="text/javascript">
+
+    var DownloadableMovie = function() {
+        Movie.call(this);
+    }
+
+
+
+    DownloadableMovie.prototype = Object.create( Movie.prototype );52
+
+    DownloadableMovie.prototype.download = function(first_argument) {      
+      console.log('download');
+    };
+
+
+    var dm = new DownloadableMovie();
+
+    dm.download('3');
+    dm.set('title', 'I am a DownloadableMovie');
+    dm.play();
+
+    var Social = {
+      share: function(person){
+        console.log('Sharing ' + this.get('title') + ' with ' + person);
+      },
+
+      like: function(){
+        console.log('Liked ' + this.get('title'));
+      }
+    }
+
+    _.extend( Movie.prototype, Social );
+
+    var ironman2 = new Movie();
+    ironman2.set('title', 'Iron Man 2');
+    ironman2.share('V. Rivas'); //output: Sharing Iron Man 2 with V. Rivas
+
+  </script>
+
+</body>
+</html>
+
+
