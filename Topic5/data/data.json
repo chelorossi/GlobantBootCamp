@@ -1,0 +1,33 @@
+	
+var templateData = 	{
+
+	"@context": "http://SOME_URL/contexts/person.jsonld",
+	"@id": "http://dbpedia.org/resource/none",	
+	"personal": {
+		"fname": "Marcelo",
+		"lname": "Rossi",
+		"born": "1983-10-13",  
+		"email": "marcerossi21@gmail.com",
+		"profession": "Software Engineer",
+		"picture": "http://m.c.lnkd.licdn.com/media/p/1/000/0a9/106/3049af5.jpg"
+
+	},
+
+	"education": {
+		"university" : "Universidad de la Republica",
+		"degree" : "Computer Engineer"
+	},
+
+	"work": {
+		"current": { "company": "Globant", "role": "Tech Lead"}
+		,
+		"past": [{"company":  "Raccon", "role": "Senior Developer"}, 
+					{"company":  "Centromac", "role": "System Analyst"},
+					{"company":  "Centromac2", "role": "System Analyst2"}
+				]
+	}
+};
+
+
+var template = _.template(document.getElementById('entry-template').innerHTML);
+document.getElementById('show-template').innerHTML = template(templateData);

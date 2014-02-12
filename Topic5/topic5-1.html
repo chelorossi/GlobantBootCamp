@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Globant html5 BootCamp - Topic5 (1 - undrescore)</title>
+	<link rel="stylesheet" type="text/css" href="css/topic5.css">
+
+
+</head>
+<body>
+
+
+<div id="show-template"></div>
+<script id="entry-template" type="text/template" class="template">	
+
+<div class="head">
+
+</div>
+<div class="body">
+	<div class="profile-picture .left">
+		<img src="<%= personal.picture %>" 	width="200px" height="200px">		
+	</div>
+	<div class="profile-summary .left">
+		<h1><%=personal.fname%> <%=personal.lname%></h1>
+		<h1><%=personal.profession%></h1>
+		
+			<h2>
+			Current:</h2> <%=work.current.role%> at <%=work.current.company%>			
+			<h2>Previous</h2> <%  _.each( work.past, function( prevItem ){ %>
+												<li><%= prevItem.company %></li>
+											<% }); %>
+					</ul>
+					
+			<h2> Education </h2>
+				
+	</div>
+	<div style="clear:both">asdf</div>
+<div>
+	
+</script>
+
+<script type="text/javascript" src="../js/underscore.js"></script>
+<script src="data/data.json" language="javascript" type="text/javascript"></script>
+
+
+</body>
+</html>

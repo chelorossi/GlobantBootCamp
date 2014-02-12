@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Globant html5 BootCamp - Topic6 (MVC & Mixins)</title>
+
+
+</head>
+
+<body>
+<h1>Topic6 (MVC & Mixins)</h1>
+<form id="new-movie">
+	<label>Title</label><input id="title-name" name="title-name" type="text">
+	<label>Details</label><input id="details" name="details" type="text">
+	<button>Post</button>
+</form>
+<hr/>
+<div id="movies-container"></div>
+<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="js/underscore.js"></script>
+<script type="text/javascript" src="js/backbone.js"></script>
+
+<script>
+	(function($) {
+		var Movie = Backbone.Model.extend({
+			defaults: function () {
+				return {
+					title: '',
+					details: ''
+				}
+			}
+		});
+
+		var MovieList = Backbone.Collection.extend({
+			model: Movie
+		});
+
+		var MovieView = Backbone.View.extend({
+			model: new Movie(),
+			tagName: 'div',
+			events: {
+				'click .edit': 'edit',
+				'click .delete': 'delete',
+				'blur .movie-title': 'close',
+				'keypress .movie-title' : 'onEnterUpdate'
+			},
+			initialize: function() {
+				this.template = _.template($('#movie-template').html());
+			},
+			edit: function(ev) {
+				ev.preventDefault();
+				this.$('.movie-title').attr('contenteditable', true).focus();
+			},
+			close: function(ev) {
+					var title = this.$('movie-title').text();
+					this.model.set('movie-title', title);
+					this.$('.movie-title').removeAttr('contenteditable');
+			},
+			onEnterUpdate: function(ev) {
+				var self = this;
+				if (ev.keyCode === 13) {
+					this.close();
+					_.delay( function() { self.$('.movie-title').blur() }, 100); // we delay 100 because same javascript tread for code and UI
+
+				}
+			},
+			delete: function(ev) {
+				ev.preventDefault();		
+				movies.remove(this.model);
+			},
+
+			render: function() {
+				this.$el.html(this.template(this.model.toJSON()));
+				return this;
+
+			}
+
+		});
+
+		var movies = new MovieList();	
+
+		var MoviesView = Backbone.View.extend({
+			model: movies,
+			el: $('#movies-container'),
+			initialize: function() {
+				this.model.on('add', this.render, this);
+				this.model.on('remove', this.render, this);
+			},
+			render: function() {
+				var self = this;
+				self.$el.html('');
+				_.each(this.model.toArray(), function(movie, i) {
+						self.$el.append((new MovieView({model: movie})).render().$el);
+
+				});
+				return this;
+			}
+
+		});
+
+
+
+		$(document).ready(function() {
+			$('#new-movie').submit( function(ev) {
+			var movie1 = new Movie({ title: $('#title-name').val(), details: $('#details').val() });
+			movies.add(movie1);
+			console.log(movies.toJSON());
+			return false;
+			});
+			
+
+			var appView = new MoviesView();
+		});
+	}) (jQuery);
+</script>
+
+<!-- Templates -->
+<script id="movie-template" type="text/template" class="template">	
+	<span class="movie-title" > <%= title %>:</span>
+	<span class="movie-details" > <%= details %>:</span>
+	<a href="#" class="edit">[edit]</a>
+	<a href="#" class="delete">[delete]</a>
+
+</script>
+
+
+
+
+
+
+
+
+
+</body>
