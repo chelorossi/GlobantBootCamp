@@ -102,13 +102,11 @@
 
 		$(document).ready(function() {
 			$('#new-movie').submit( function(ev) {
-			var movie1 = new Movie({ title: $('#title-name').val(), details: $('#details').val() });
-			movies.add(movie1);
-			console.log(movies.toJSON());
-			return false;
-			});
-			
-
+				var movie1 = new Movie({ title: $('#title-name').val(), details: $('#details').val() });
+				movies.add(movie1);
+				console.log(movies.toJSON());
+				return false;
+			});		
 			var appView = new MoviesView();
 		});
 	}) (jQuery);
